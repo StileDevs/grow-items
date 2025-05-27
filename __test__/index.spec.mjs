@@ -1,6 +1,6 @@
 import test from "ava";
 import { readFileSync } from "fs";
-import { ItemsDat } from "../esm.mjs";
+import { ItemsDat } from "../dist/index.mjs";
 
 const file = readFileSync("./assets/items.dat");
 const fileArr = [...file];
