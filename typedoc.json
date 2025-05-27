@@ -1,0 +1,8 @@
+{
+  "entryPoints": ["./lib/index.ts"],
+  "cname": "stiledevs.github.io",
+  "out": "docs",
+  "theme": "default",
+  "entryPointStrategy": "expand",
+  "readme": "./README.md"
+}

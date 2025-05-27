@@ -1,0 +1,51 @@
+{
+  "name": "grow-items",
+  "description": "A standalone items.dat parser for Growtopia",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "bun": "./dist/index.js",
+      "import": "./esm.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "ava": {
+    "timeout": "3m"
+  },
+  "engines": {
+    "node": ">= 10"
+  },
+  "homepage": "https://github.com/StileDevs/grow-items#readme",
+  "bugs": {
+    "url": "https://github.com/StileDevs/grow-items/issues"
+  },
+  "repository": "https://github.com/StileDevs/grow-items.git",
+  "scripts": {
+    "test": "ava",
+    "build": "pnpm run build:ts",
+    "build:ts": "rimraf dist && tsc",
+    "docs": "rimraf docs && typedoc"
+  },
+  "keywords": [
+    "growtopia",
+    "items",
+    "parser"
+  ],
+  "author": {
+    "name": "StileDevs",
+    "email": "jadlion.dev@gmail.com",
+    "url": "https://stile.jad.li"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "ava": "^6.3.0",
+    "rimraf": "^5.0.10",
+    "tsx": "^4.19.4",
+    "typedoc": "^0.28.5",
+    "typescript": "^5.8.3"
+  }
+}
