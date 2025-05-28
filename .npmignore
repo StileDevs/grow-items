@@ -21,3 +21,4 @@ build.rs
 Cargo.toml
 .vscode
 pnpm-lock.yaml
+tsup.config.tsconfig
