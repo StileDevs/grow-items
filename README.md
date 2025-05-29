@@ -19,20 +19,6 @@ npm install grow-items
 
 ### Browser via CDN
 
-#### jsDelivr
-
-```html
-<!-- Global build -->
-<script src="https://cdn.jsdelivr.net/npm/grow-items@latest/dist/index.global.js"></script>
-
-<!-- ES Module -->
-<script type="module">
-  import { ItemsDat } from "https://cdn.jsdelivr.net/npm/grow-items@latest/dist/index.mjs";
-</script>
-```
-
-#### UNPKG
-
 ```html
 <!-- Global build -->
 <script src="https://unpkg.com/grow-items@latest/dist/index.global.js"></script>
