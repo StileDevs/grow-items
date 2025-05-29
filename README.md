@@ -11,13 +11,41 @@ A standalone items.dat parser for Growtopia. This library allows you to read, mo
 
 ## Installation
 
+### Node.js
+
 ```bash
 npm install grow-items
 ```
 
+### Browser via CDN
+
+#### jsDelivr
+
+```html
+<!-- Global build -->
+<script src="https://cdn.jsdelivr.net/npm/grow-items@latest/dist/index.global.js"></script>
+
+<!-- ES Module -->
+<script type="module">
+  import { ItemsDat } from "https://cdn.jsdelivr.net/npm/grow-items@latest/dist/index.mjs";
+</script>
+```
+
+#### UNPKG
+
+```html
+<!-- Global build -->
+<script src="https://unpkg.com/grow-items@latest/dist/index.global.js"></script>
+
+<!-- ES Module -->
+<script type="module">
+  import { ItemsDat } from "https://unpkg.com/grow-items@latest/dist/index.mjs";
+</script>
+```
+
 ## Usage
 
-### Basic Example
+### Node.js Example
 
 ```javascript
 import { ItemsDat } from "grow-items";
@@ -29,6 +57,30 @@ const fileArr = [...file];
 
 // Create ItemsDat instance
 const itemsDat = new ItemsDat(fileArr);
+
+// Decode the data
+await itemsDat.decode();
+
+// Access metadata
+console.log("Version:", itemsDat.meta.version);
+console.log("Item Count:", itemsDat.meta.itemCount);
+
+// Modify an item
+const dirt = itemsDat.meta.items[2];
+dirt.name = "Super Dirt";
+
+// Encode modified data
+await itemsDat.encode();
+```
+
+### Browser Example
+
+```javascript
+// Raw Data
+const fileArr = Array.from(new Uint8Array([1, 0, 0, 0]));
+
+// Create ItemsDat instance
+const itemsDat = new growItems.ItemsDat(fileArr);
 
 // Decode the data
 await itemsDat.decode();
@@ -68,11 +120,11 @@ Main class for handling items.dat files.
 
 ## Module Formats
 
-Compatible with:
+The library is available in multiple formats:
 
-- CommonJS
-- ESModule
-- Browser (via CDN)
+- CommonJS (Node.js) - `require('grow-items')`
+- ES Modules - `import { ItemsDat } from 'grow-items'`
+- Browser Global - `window.growItems`
 
 ## License
 
