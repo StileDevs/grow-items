@@ -1,7 +1,5 @@
 name: CI Pipeline
-permissions:
-  contents: write
-  id-token: write
+
 on:
   push:
     branches:
@@ -54,6 +52,9 @@ jobs:
 
   publish:
     needs: build-and-test
+    permissions:
+      contents: write
+      id-token: write
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
 
@@ -81,12 +82,13 @@ jobs:
           if git log -1 --pretty=%B | grep "^[0-9]\+\.[0-9]\+\.[0-9]\+$"; then
             pnpm publish --access public --no-git-checks
           elif git log -1 --pretty=%B | grep "^[0-9]\+\.[0-9]\+\.[0-9]\+"; then
-            NPM_CONFIG_PROVENANCE=true pnpm publish --tag next --access public --no-git-checks
+            pnpm publish --tag next --access public --no-git-checks
           else
             echo "Not a release, skipping publish"
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
   release:
     name: Release
     runs-on: ubuntu-latest
