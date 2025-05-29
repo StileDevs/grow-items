@@ -6,11 +6,17 @@ const pkg = JSON.parse(readFileSync("./package.json", "utf-8")) as Record<string
 
 export default defineConfig({
   entry: ["lib/index.ts"],
-  splitting: true,
-  sourcemap: false,
-  format: ["cjs", "esm"],
+  splitting: false,
+  sourcemap: true,
+  format: ["cjs", "esm", "iife"],
   dts: true,
   bundle: true,
+  globalName: "growItems",
+  outExtension({ format }) {
+    return {
+      js: format === "iife" ? ".global.js" : format === "esm" ? ".mjs" : ".js"
+    };
+  },
   banner: {
     js: `
 /*!
