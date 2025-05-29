@@ -1,5 +1,7 @@
 name: CI Pipeline
-
+permissions:
+  contents: write
+  id-token: write
 on:
   push:
     branches:
@@ -67,6 +69,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           registry-url: "https://registry.npmjs.org"
+          provenance: true
 
       - name: Download build artifacts
         uses: actions/download-artifact@v4
@@ -92,6 +95,18 @@ jobs:
     if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Zip dist directory
+        run: |
+          VERSION=$(git log -1 --pretty=%B)
+          zip -r "growItems-v${VERSION}.zip" dist/
+
       - name: Create Release
         id: create_release
         run: |
@@ -100,7 +115,8 @@ jobs:
             gh release create "$VERSION" \
               --title "$VERSION" \
               --notes "Release version $VERSION" \
-              --target ${{ github.sha }}
+              --target ${{ github.sha }} \
+              "growItems-v${VERSION}.zip"
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
