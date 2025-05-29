@@ -3,6 +3,7 @@ Cargo.lock
 .cargo
 .github
 npm
+types
 .eslintrc
 .prettierignore
 rustfmt.toml

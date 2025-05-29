@@ -1,7 +1,7 @@
 {
   "name": "grow-items",
   "description": "A standalone items.dat parser for Growtopia",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
