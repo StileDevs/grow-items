@@ -69,7 +69,6 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           registry-url: "https://registry.npmjs.org"
-          provenance: true
 
       - name: Download build artifacts
         uses: actions/download-artifact@v4
@@ -82,7 +81,7 @@ jobs:
           if git log -1 --pretty=%B | grep "^[0-9]\+\.[0-9]\+\.[0-9]\+$"; then
             pnpm publish --access public --no-git-checks
           elif git log -1 --pretty=%B | grep "^[0-9]\+\.[0-9]\+\.[0-9]\+"; then
-            pnpm publish --tag next --access public --no-git-checks
+            NPM_CONFIG_PROVENANCE=true pnpm publish --tag next --access public --no-git-checks
           else
             echo "Not a release, skipping publish"
           fi
