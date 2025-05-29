@@ -1,21 +1,22 @@
 {
   "name": "grow-items",
   "description": "A standalone items.dat parser for Growtopia",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "browser": "./dist/index.global.js",
       "require": "./dist/index.js",
       "import": "./dist/index.mjs",
       "default": "./dist/index.js"
     }
   },
+  "type": "commonjs",
   "ava": {
-    "timeout": "3m"
+    "timeout": "3m",
+    "serial": true
   },
   "engines": {
     "node": ">= 10"
