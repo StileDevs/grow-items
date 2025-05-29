@@ -25,11 +25,11 @@
   },
   "repository": "https://github.com/StileDevs/grow-items.git",
   "scripts": {
-    "test": "ava",
     "build": "pnpm run build:tsup",
     "build:ts": "rimraf dist && tsc",
     "build:tsup": "rimraf dist && tsup",
-    "docs": "rimraf docs && typedoc"
+    "docs": "rimraf docs && typedoc",
+    "test": "ava"
   },
   "keywords": [
     "growtopia",
