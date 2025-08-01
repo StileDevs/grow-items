@@ -5,7 +5,7 @@ const file = readFileSync("./assets/items.dat");
 const fileArr = [...file];
 
 /**
- * @type {import("../esm.mjs").ItemsDat}
+ * @type {import("../dist/index").ItemsDat}
  */
 let itemsDat;
 
@@ -67,6 +67,7 @@ test.serial("itemsDat meta modify item test (check condition)", async (t) => {
 test.serial("itemsDat encode test", async (t) => {
   try {
     await itemsDat.encode();
+    t.log("Item Write Size:", itemsDat.getWriteSize(itemsDat.meta.items));
     t.log("Buffer position after encode:", itemsDat.buffer.mempos);
     t.log("Buffer total length after encode:", itemsDat.buffer.data.length);
 

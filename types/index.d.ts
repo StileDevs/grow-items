@@ -5,6 +5,7 @@ export interface StringOptions {
 
 export interface ItemDefinition {
   [key: string]: any;
+
   id?: number;
   flags?: number;
   flagsCategory?: number;
@@ -14,7 +15,7 @@ export interface ItemDefinition {
   texture?: string;
   textureHash?: number;
   visualEffectType?: number;
-  flags2?: number;
+  cookingTime?: number;
   textureX?: number;
   textureY?: number;
   storageType?: number;
@@ -41,28 +42,38 @@ export interface ItemDefinition {
   seedColor?: number;
   seedOverlayColor?: number;
   isMultiFace?: number;
-  isRayman?: number;
   extraOptions?: string;
   texture2?: string;
   extraOptions2?: string;
   punchOptions?: string;
-
   extraBytes?: number[];
+  tileRange?: number;
+  vaultCapacity?: number;
 
-  // new options
   ingredient?: number;
+  fxFlags?: number;
+  flags2?: number;
   flags3?: number;
-  flags4?: number;
   bodyPart?: number[];
-  flags5?: number;
-  extraTexture?: string;
+  lightRange?: number;
+  canSit?: number;
+  playerOffsetX?: number;
+  playerOffsetY?: number;
+  chairTextureX?: number;
+  chairTextureY?: number;
+  chairLegOffsetX?: number;
+  chairLegOffsetY?: number;
+  chairTexture?: string;
   itemRenderer?: string;
   unknownInt1?: number; // NOTE: not sure what this does
+  unknownInt2?: number; // NOTE: not sure what this does
+  unknownInt3?: number; // NOTE: not sure what this does
   unknownBytes1?: number[]; // NOTE: not sure what this does
   extraFlags1?: number; // NOTE: not sure what this does
-  extraHash1?: number; // NOTE: not sure what this does
+  itemRendererHash?: number; // NOTE: not sure what this does
   unknownBytes2?: number[]; // NOTE: not sure what this does
   unknownShort1?: number; // NOTE: not sure what this does
+  info?: string; // NOTE: not sure what this does
 }
 
 export interface ItemsDatMeta {
