@@ -162,8 +162,7 @@ export class ItemsDat {
 
     for (const item of this.meta.items) {
       this.buffer.writeI32(item.id!);
-      this.buffer.writeU8(item.flags!);
-      this.buffer.writeU8(item.flagsCategory!);
+      this.buffer.writeU16(item.flags!);
       this.buffer.writeU8(item.type!);
       this.buffer.writeU8(item.materialType!);
 
