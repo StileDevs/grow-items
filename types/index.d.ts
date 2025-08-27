@@ -8,7 +8,6 @@ export interface ItemDefinition {
 
   id?: number;
   flags?: number;
-  flagsCategory?: number;
   type?: number;
   materialType?: number;
   name?: string;

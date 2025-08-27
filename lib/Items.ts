@@ -61,8 +61,7 @@ export class ItemsDat {
       const item: ItemDefinition = {};
 
       item.id = this.buffer.readI32();
-      item.flags = this.buffer.readU8();
-      item.flagsCategory = this.buffer.readU8();
+      item.flags = this.buffer.readU16();
       item.type = this.buffer.readU8();
       item.materialType = this.buffer.readU8();
 
@@ -163,8 +162,7 @@ export class ItemsDat {
 
     for (const item of this.meta.items) {
       this.buffer.writeI32(item.id!);
-      this.buffer.writeU8(item.flags!);
-      this.buffer.writeU8(item.flagsCategory!);
+      this.buffer.writeU16(item.flags!);
       this.buffer.writeU8(item.type!);
       this.buffer.writeU8(item.materialType!);
 
