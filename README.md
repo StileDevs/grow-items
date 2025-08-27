@@ -4,7 +4,7 @@ A standalone items.dat parser for Growtopia. This library allows you to read, mo
 
 ## Features
 
-- Read/parse items.dat files
+- Read/parse items.dat file
 - Modify item properties (e.g. names, attributes)
 - Encode modified data back to items.dat format
 - Support for item metadata like version and item count
