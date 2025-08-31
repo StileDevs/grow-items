@@ -1,3 +1,5 @@
+import type { Collection } from "../lib/Collection";
+
 export interface StringOptions {
   id?: number;
   encoded?: boolean;
@@ -78,5 +80,5 @@ export interface ItemDefinition {
 export interface ItemsDatMeta {
   version?: number;
   itemCount?: number;
-  items: ItemDefinition[];
+  items: Collection<string, ItemDefinition>;
 }

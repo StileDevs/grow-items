@@ -1,7 +1,7 @@
 {
   "name": "grow-items",
   "description": "A standalone items.dat parser for Growtopia",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -35,8 +35,7 @@
   "keywords": [
     "growtopia",
     "items",
-    "parser",
-    "data"
+    "parser"
   ],
   "author": {
     "name": "StileDevs",

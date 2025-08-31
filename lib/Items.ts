@@ -1,4 +1,5 @@
 import type { ItemDefinition, ItemsDatMeta, StringOptions } from "../types";
+import { Collection } from "./Collection";
 import { ExtendBuffer } from "./ExtendBuffer";
 
 export class ItemsDat {
@@ -22,7 +23,7 @@ export class ItemsDat {
   ];
 
   public meta: ItemsDatMeta = {
-    items: [],
+    items: new Collection(),
     itemCount: 0,
     version: 0
   };
@@ -31,10 +32,10 @@ export class ItemsDat {
     this.buffer = new ExtendBuffer(data);
   }
 
-  public getWriteSize(items: ItemDefinition[]) {
-    let size = 130 * items.length;
+  public getWriteSize() {
+    let size = 130 * this.meta.items.size;
 
-    for (const item of items) {
+    this.meta.items.forEach((item) => {
       const keys = Object.keys(item);
 
       for (const key of keys) {
@@ -47,7 +48,7 @@ export class ItemsDat {
           size += numArray.length;
         }
       }
-    }
+    });
 
     return size + 4 + 2;
   }
@@ -148,19 +149,19 @@ export class ItemsDat {
         if (this.meta.version! >= 22) item.info = await this.readString({ id: item.id });
       }
 
-      this.meta.items.push(item);
+      this.meta.items.set(item.id.toString(), item);
     }
   }
 
   public async encode() {
     this.buffer.mempos = 0;
-    const size = this.getWriteSize(this.meta.items);
+    const size = this.getWriteSize();
 
     this.buffer = new ExtendBuffer(size);
     this.buffer.writeI16(this.meta.version!);
-    this.buffer.writeI32(this.meta.items.length);
+    this.buffer.writeI32(this.meta.items.size);
 
-    for (const item of this.meta.items) {
+    for (const item of this.meta.items.values()) {
       this.buffer.writeI32(item.id!);
       this.buffer.writeU16(item.flags!);
       this.buffer.writeU8(item.type!);
