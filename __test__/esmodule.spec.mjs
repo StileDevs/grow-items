@@ -49,20 +49,23 @@ test.serial("itemsDat meta itemCount test (more than 1)", (t) => {
   t.is(count >= 1, true, "ItemDat itemCount should be at least 1");
 });
 
-test.serial("itemsDat meta items length test (more than 1)", (t) => {
-  t.log("ItemsDat items length:", itemsDat.meta.items.length);
-  t.is(itemsDat.meta.items.length >= 1, true, "ItemsDat items should have at least one item");
+test.serial("itemsDat meta items size test (more than 1)", (t) => {
+  t.log("ItemsDat items size:", itemsDat.meta.items.size);
+  t.is(itemsDat.meta.items.size >= 1, true, "ItemsDat items should have at least one item");
 });
 
 test.serial("itemsDat meta modify item test (check condition)", async (t) => {
-  const dirt = itemsDat.meta.items[2];
+  const dirt = itemsDat.meta.items.get("2");
   const itemModifyName = "Super Dirt";
 
   t.log("Original dirt name:", dirt.name);
-  itemsDat.meta.items[2].name = itemModifyName;
-  t.log("Modified dirt name:", dirt.name);
 
-  t.is(itemsDat.meta.items[2].name, itemModifyName, "ItemDat name should be modified to 'Super Dirt'");
+  const modifiedDirt = { ...dirt, name: itemModifyName };
+  itemsDat.meta.items.set("2", modifiedDirt);
+  const updatedDirt = itemsDat.meta.items.get("2");
+  t.log("Modified dirt name:", updatedDirt.name);
+
+  t.is(updatedDirt.name, itemModifyName, "ItemDat name should be modified to 'Super Dirt'");
 });
 
 test.serial("itemsDat encode test", async (t) => {
