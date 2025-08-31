@@ -15,12 +15,7 @@ export class ExtendBuffer {
   }
 
   private readSigned(size: number): number {
-    let value = this.read(size);
-    const bits = size * 8;
-    if (value & (1 << (bits - 1))) {
-      value = value - (1 << bits);
-    }
-    return value;
+    return this.read(size) << 0;
   }
 
   private write(value: number, size: number): void {
@@ -48,12 +43,7 @@ export class ExtendBuffer {
   }
 
   private readSignedBE(size: number): number {
-    let value = this.readBE(size);
-    const bits = size * 8;
-    if (value & (1 << (bits - 1))) {
-      value = value - (1 << bits);
-    }
-    return value;
+    return this.readBE(size) << 0;
   }
 
   public writeU8 = (value: number) => this.write(value, 1);
