@@ -151,7 +151,7 @@ export class ItemsDat {
           item.recipe = [];
           for(let i = 0; i <= 1; i++) {
             const data = this.buffer.readU16();
-            if(data) item.recipe[i] = data 
+            if(data) item.recipe[i] = data;
           }
         } 
         
