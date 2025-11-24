@@ -147,6 +147,14 @@ export class ItemsDat {
         if (this.meta.version >= 19) item.unknownBytes2 = this.buffer.data.slice(this.buffer.mempos, (this.buffer.mempos += 9));
         if (this.meta.version! >= 21) item.unknownShort1 = this.buffer.readI16();
         if (this.meta.version! >= 22) item.info = await this.readString({ id: item.id });
+        if (this.meta.version! >= 23) {
+          item.recipe = [];
+          for(let i = 0; i <= 1; i++) {
+            const data = this.buffer.readU16();
+            if(data) item.recipe[i] = data 
+          }
+        } 
+        
       }
 
       this.meta.items.set(item.id.toString(), item);
@@ -264,6 +272,10 @@ export class ItemsDat {
         }
         if (this.meta.version! >= 21) this.buffer.writeI16(item.unknownShort1!);
         if (this.meta.version! >= 22) this.writeString(item.info!, item.id!);
+        if (this.meta.version! >= 23) {
+          this.buffer.writeU16(item.recipe?.[0] ?? 0);
+          this.buffer.writeU16(item.recipe?.[1] ?? 0);
+        }
       }
     }
   }

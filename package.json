@@ -1,7 +1,7 @@
 {
   "name": "grow-items",
   "description": "A standalone items.dat parser for Growtopia",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -26,8 +26,8 @@
   },
   "repository": "https://github.com/StileDevs/grow-items.git",
   "scripts": {
-    "test": "ava",
-    "build": "pnpm run build:tsup",
+    "test": "nr build && ava",
+    "build": "nr build:tsup",
     "build:ts": "rimraf dist && tsc",
     "build:tsup": "rimraf dist && tsup",
     "docs": "rimraf docs && typedoc"
@@ -44,6 +44,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@antfu/ni": "^27.0.1",
     "@types/node": "^24.1.0",
     "ava": "^6.4.1",
     "rimraf": "^6.0.1",

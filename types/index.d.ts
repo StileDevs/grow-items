@@ -74,7 +74,8 @@ export interface ItemDefinition {
   itemRendererHash?: number; // NOTE: not sure what this does
   unknownBytes2?: number[]; // NOTE: not sure what this does
   unknownShort1?: number; // NOTE: not sure what this does
-  info?: string; // NOTE: not sure what this does
+  info?: string;
+  recipe?: number[];
 }
 
 export interface ItemsDatMeta {
