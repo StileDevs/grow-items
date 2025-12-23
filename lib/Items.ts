@@ -147,19 +147,26 @@ export class ItemsDat {
 
           item.chairTexture = await this.readString({ id: item.id });
         }
+
         if (this.meta.version >= 16)
           item.itemRenderer = await this.readString({ id: item.id });
+
         if (this.meta.version >= 17) item.extraFlags1 = this.buffer.readI32();
+
         if (this.meta.version >= 18)
           item.itemRendererHash = this.buffer.readI32();
+
         if (this.meta.version >= 19)
           item.unknownBytes2 = this.buffer.data.slice(
             this.buffer.mempos,
             (this.buffer.mempos += 9),
           );
+
         if (this.meta.version >= 21) item.unknownShort1 = this.buffer.readI16();
+
         if (this.meta.version >= 22)
           item.info = await this.readString({ id: item.id });
+
         if (this.meta.version >= 23) {
           item.recipe = [];
           for (let i = 0; i <= 1; i++) {
