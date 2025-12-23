@@ -1,7 +1,7 @@
 {
   "name": "grow-items",
   "description": "A standalone items.dat parser for Growtopia",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -47,7 +47,7 @@
     "@antfu/ni": "^27.0.1",
     "@types/node": "^24.1.0",
     "ava": "^6.4.1",
-    "rimraf": "^6.0.1",
+    "rimraf": "^6.1.2",
     "tsup": "^8.5.0",
     "tsx": "^4.20.3",
     "typedoc": "^0.28.8",

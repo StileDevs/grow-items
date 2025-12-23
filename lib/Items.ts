@@ -19,13 +19,13 @@ export class ItemsDat {
     "punchOptions",
     "chairTexture",
     "itemRenderer",
-    "info"
+    "info",
   ];
 
   public meta: ItemsDatMeta = {
     items: new Collection(),
     itemCount: 0,
-    version: 0
+    version: 0,
   };
 
   constructor(data: number[] | number) {
@@ -33,7 +33,7 @@ export class ItemsDat {
   }
 
   public getWriteSize() {
-    let size = 130 * this.meta.items.size;
+    let size = 134 * this.meta.items.size;
 
     this.meta.items.forEach((item) => {
       const keys = Object.keys(item);
@@ -114,7 +114,10 @@ export class ItemsDat {
       item.unknownInt2 = this.buffer.readI32();
       item.flags2 = this.buffer.readI32();
 
-      item.extraBytes = this.buffer.data.slice(this.buffer.mempos, (this.buffer.mempos += 60));
+      item.extraBytes = this.buffer.data.slice(
+        this.buffer.mempos,
+        (this.buffer.mempos += 60),
+      );
 
       item.tileRange = this.buffer.readI32();
       item.vaultCapacity = this.buffer.readI32();
@@ -124,7 +127,10 @@ export class ItemsDat {
 
         if (this.meta.version >= 12) {
           item.flags3 = this.buffer.readI32();
-          item.bodyPart = this.buffer.data.slice(this.buffer.mempos, (this.buffer.mempos += 9));
+          item.bodyPart = this.buffer.data.slice(
+            this.buffer.mempos,
+            (this.buffer.mempos += 9),
+          );
         }
         if (this.meta.version >= 13) item.lightRange = this.buffer.readI32();
         if (this.meta.version >= 14) item.unknownInt3 = this.buffer.readI32();
@@ -141,23 +147,32 @@ export class ItemsDat {
 
           item.chairTexture = await this.readString({ id: item.id });
         }
-        if (this.meta.version >= 16) item.itemRenderer = await this.readString({ id: item.id });
+        if (this.meta.version >= 16)
+          item.itemRenderer = await this.readString({ id: item.id });
         if (this.meta.version >= 17) item.extraFlags1 = this.buffer.readI32();
-        if (this.meta.version >= 18) item.itemRendererHash = this.buffer.readI32();
-        if (this.meta.version >= 19) item.unknownBytes2 = this.buffer.data.slice(this.buffer.mempos, (this.buffer.mempos += 9));
-        if (this.meta.version! >= 21) item.unknownShort1 = this.buffer.readI16();
-        if (this.meta.version! >= 22) item.info = await this.readString({ id: item.id });
-        if (this.meta.version! >= 23) {
+        if (this.meta.version >= 18)
+          item.itemRendererHash = this.buffer.readI32();
+        if (this.meta.version >= 19)
+          item.unknownBytes2 = this.buffer.data.slice(
+            this.buffer.mempos,
+            (this.buffer.mempos += 9),
+          );
+        if (this.meta.version >= 21) item.unknownShort1 = this.buffer.readI16();
+        if (this.meta.version >= 22)
+          item.info = await this.readString({ id: item.id });
+        if (this.meta.version >= 23) {
           item.recipe = [];
-          for(let i = 0; i <= 1; i++) {
+          for (let i = 0; i <= 1; i++) {
             const data = this.buffer.readU16();
-            if(data) item.recipe[i] = data;
+            if (data) item.recipe[i] = data;
           }
-        } 
-        
+        }
+        if (this.meta.version >= 24) {
+          item.unknownByte1 = this.buffer.readI8();
+        }
       }
 
-      this.meta.items.set(item.id.toString(), item);
+      this.meta.items.set(item.id, item);
     }
   }
 
@@ -262,7 +277,8 @@ export class ItemsDat {
           await this.writeString(item.itemRenderer || "", item.id!);
         }
         if (this.meta.version! >= 17) this.buffer.writeI32(item.extraFlags1!);
-        if (this.meta.version! >= 18) this.buffer.writeI32(item.itemRendererHash!);
+        if (this.meta.version! >= 18)
+          this.buffer.writeI32(item.itemRendererHash!);
         if (this.meta.version! >= 19) {
           if (item.unknownBytes2) {
             for (const byte of item.unknownBytes2) {
@@ -276,11 +292,16 @@ export class ItemsDat {
           this.buffer.writeU16(item.recipe?.[0] ?? 0);
           this.buffer.writeU16(item.recipe?.[1] ?? 0);
         }
+        if (this.meta.version! >= 24) {
+          this.buffer.writeI8(item.unknownByte1!);
+        }
       }
     }
   }
 
-  private async readString(opts: StringOptions = { encoded: false }): Promise<string> {
+  private async readString(
+    opts: StringOptions = { encoded: false },
+  ): Promise<string> {
     const len = this.buffer.readI16();
 
     if (!opts.encoded) {
@@ -292,14 +313,23 @@ export class ItemsDat {
     } else {
       const chars = [];
       for (let i = 0; i < len; i++) {
-        chars.push(String.fromCharCode(this.buffer.data[this.buffer.mempos] ^ this.key.charCodeAt((opts.id! + i) % this.key.length)));
+        chars.push(
+          String.fromCharCode(
+            this.buffer.data[this.buffer.mempos] ^
+              this.key.charCodeAt((opts.id! + i) % this.key.length),
+          ),
+        );
         this.buffer.mempos++;
       }
       return chars.join("");
     }
   }
 
-  private async writeString(str: string, id: number, encoded: boolean = false): Promise<void> {
+  private async writeString(
+    str: string,
+    id: number,
+    encoded: boolean = false,
+  ): Promise<void> {
     this.buffer.writeI16(str.length);
 
     if (!encoded) {
@@ -308,7 +338,8 @@ export class ItemsDat {
       }
     } else {
       for (let i = 0; i < str.length; i++) {
-        const char = str.charCodeAt(i) ^ this.key.charCodeAt((i + id) % this.key.length);
+        const char =
+          str.charCodeAt(i) ^ this.key.charCodeAt((i + id) % this.key.length);
         this.buffer.writeU8(char);
       }
     }

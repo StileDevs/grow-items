@@ -15,11 +15,14 @@ test.serial("initialize the items.dat (is exist)", (t) => {
   t.is(itemsDat instanceof ItemsDat, true);
 });
 
-test.serial("file & itemsdat object has same bytes size (should match)", (t) => {
-  t.log("file length:", file.length);
-  t.log("itemsDat buffer length:", itemsDat.buffer.data.length);
-  t.is(file.length, itemsDat.buffer.data.length);
-});
+test.serial(
+  "file & itemsdat object has same bytes size (should match)",
+  (t) => {
+    t.log("file length:", file.length);
+    t.log("itemsDat buffer length:", itemsDat.buffer.data.length);
+    t.is(file.length, itemsDat.buffer.data.length);
+  },
+);
 
 test.serial("itemsDat decode test", async (t) => {
   try {
@@ -51,21 +54,29 @@ test.serial("itemsDat meta itemCount test (more than 1)", (t) => {
 
 test.serial("itemsDat meta items size test (more than 1)", (t) => {
   t.log("ItemsDat items size:", itemsDat.meta.items.size);
-  t.is(itemsDat.meta.items.size >= 1, true, "ItemsDat items should have at least one item");
+  t.is(
+    itemsDat.meta.items.size >= 1,
+    true,
+    "ItemsDat items should have at least one item",
+  );
 });
 
 test.serial("itemsDat meta modify item test (check condition)", async (t) => {
-  const dirt = itemsDat.meta.items.get("2");
+  const dirt = itemsDat.meta.items.get(2);
   const itemModifyName = "Super Dirt";
 
   t.log("Original dirt name:", dirt.name);
 
   const modifiedDirt = { ...dirt, name: itemModifyName };
-  itemsDat.meta.items.set("2", modifiedDirt);
-  const updatedDirt = itemsDat.meta.items.get("2");
+  itemsDat.meta.items.set(2, modifiedDirt);
+  const updatedDirt = itemsDat.meta.items.get(2);
   t.log("Modified dirt name:", updatedDirt.name);
 
-  t.is(updatedDirt.name, itemModifyName, "ItemDat name should be modified to 'Super Dirt'");
+  t.is(
+    updatedDirt.name,
+    itemModifyName,
+    "ItemDat name should be modified to 'Super Dirt'",
+  );
 });
 
 test.serial("itemsDat encode test", async (t) => {
@@ -75,7 +86,11 @@ test.serial("itemsDat encode test", async (t) => {
     t.log("Buffer position after encode:", itemsDat.buffer.mempos);
     t.log("Buffer total length after encode:", itemsDat.buffer.data.length);
 
-    t.is(itemsDat.buffer.mempos, itemsDat.buffer.data.length, "Buffer position should match total length after encoding");
+    t.is(
+      itemsDat.buffer.mempos,
+      itemsDat.buffer.data.length,
+      "Buffer position should match total length after encoding",
+    );
   } catch (err) {
     t.fail(`Encode failed: ${err.message}`);
   }
@@ -87,5 +102,9 @@ test.serial("itemsDat compare with original file (should not match)", (t) => {
   t.log("Encoded file length:", encodedFile.length);
   t.log("Original file length:", file.length);
 
-  t.not(encodedFile.length, file.length, "Encoded file should not match original file size");
+  t.not(
+    encodedFile.length,
+    file.length,
+    "Encoded file should not match original file size",
+  );
 });

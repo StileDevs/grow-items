@@ -76,10 +76,11 @@ export interface ItemDefinition {
   unknownShort1?: number; // NOTE: not sure what this does
   info?: string;
   recipe?: number[];
+  unknownByte1?: number;
 }
 
 export interface ItemsDatMeta {
   version?: number;
   itemCount?: number;
-  items: Collection<string, ItemDefinition>;
+  items: Collection<number, ItemDefinition>;
 }
