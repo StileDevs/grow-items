@@ -77,6 +77,8 @@ export interface ItemDefinition {
   info?: string;
   recipe?: number[];
   unknownByte1?: number;
+  hitSoundFX?: string;
+  hitSoundFXHash?: number;
 }
 
 export interface ItemsDatMeta {

@@ -20,6 +20,7 @@ export class ItemsDat {
     "chairTexture",
     "itemRenderer",
     "info",
+    "hitSoundFX",
   ];
 
   public meta: ItemsDatMeta = {
@@ -33,7 +34,7 @@ export class ItemsDat {
   }
 
   public getWriteSize() {
-    let size = 134 * this.meta.items.size;
+    let size = 138 * this.meta.items.size;
 
     this.meta.items.forEach((item) => {
       const keys = Object.keys(item);
@@ -177,6 +178,11 @@ export class ItemsDat {
         if (this.meta.version >= 24) {
           item.unknownByte1 = this.buffer.readI8();
         }
+
+        if (this.meta.version >= 25) {
+          item.hitSoundFX = await this.buffer.readString();
+          item.hitSoundFXHash = this.buffer.readU32();
+        }
       }
 
       this.meta.items.set(item.id, item);
@@ -301,6 +307,10 @@ export class ItemsDat {
         }
         if (this.meta.version! >= 24) {
           this.buffer.writeI8(item.unknownByte1!);
+        }
+        if (this.meta.version! >= 25) {
+          await this.writeString(item.hitSoundFX || "", item.id!);
+          this.buffer.writeU32(item.hitSoundFXHash!);
         }
       }
     }
