@@ -185,7 +185,7 @@ export class ItemsDat {
         }
 
         if (this.meta.version >= 26) {
-          item.unknownByte1 = this.buffer.readU8();
+          item.unknownByte2 = this.buffer.readU8();
         }
       }
 
@@ -317,7 +317,7 @@ export class ItemsDat {
           this.buffer.writeU32(item.hitSoundFXHash!);
         }
         if (this.meta.version! >= 26) {
-          this.buffer.writeU8(item.unknownByte1!);
+          this.buffer.writeU8(item.unknownByte2!);
         }
       }
     }

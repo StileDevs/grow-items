@@ -79,7 +79,7 @@ export interface ItemDefinition {
   unknownByte1?: number;
   hitSoundFX?: string;
   hitSoundFXHash?: number;
-  unknownByte2?: number[]; // NOTE: not sure what this does
+  unknownByte2?: number; // NOTE: not sure what this does
 }
 
 export interface ItemsDatMeta {
