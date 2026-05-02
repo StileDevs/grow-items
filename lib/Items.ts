@@ -34,7 +34,7 @@ export class ItemsDat {
   }
 
   public getWriteSize() {
-    let size = 138 * this.meta.items.size;
+    let size = 139 * this.meta.items.size;
 
     this.meta.items.forEach((item) => {
       const keys = Object.keys(item);
@@ -183,6 +183,10 @@ export class ItemsDat {
           item.hitSoundFX = await this.buffer.readString();
           item.hitSoundFXHash = this.buffer.readU32();
         }
+
+        if (this.meta.version >= 26) {
+          item.unknownByte1 = this.buffer.readU8();
+        }
       }
 
       this.meta.items.set(item.id, item);
@@ -311,6 +315,9 @@ export class ItemsDat {
         if (this.meta.version! >= 25) {
           await this.writeString(item.hitSoundFX || "", item.id!);
           this.buffer.writeU32(item.hitSoundFXHash!);
+        }
+        if (this.meta.version! >= 26) {
+          this.buffer.writeU8(item.unknownByte1!);
         }
       }
     }
