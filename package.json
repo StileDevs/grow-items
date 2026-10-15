@@ -26,8 +26,8 @@
   },
   "repository": "https://github.com/StileDevs/grow-items.git",
   "scripts": {
-    "test": "nr build && ava",
-    "build": "nr build:tsup",
+    "test": "bun run build && ava",
+    "build": "bun run build:tsup",
     "build:ts": "rimraf dist && tsc",
     "build:tsup": "rimraf dist && tsup",
     "docs": "rimraf docs && typedoc"
@@ -44,13 +44,11 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@antfu/ni": "^27.0.1",
-    "@types/node": "^24.1.0",
-    "ava": "^6.4.1",
+    "@types/node": "^26.6.5",
+    "ava": "^8.0.1",
     "rimraf": "^6.1.2",
-    "tsup": "^8.5.0",
-    "tsx": "^4.20.3",
+    "tsup": "^9.0.0",
     "typedoc": "^0.28.8",
-    "typescript": "^5.9.2"
+    "typescript": "6.0.3"
   }
 }

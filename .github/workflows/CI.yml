@@ -24,9 +24,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: pnpm/action-setup@v2
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          version: latest
+          bun-version: ${{ env.BUN_VERSION }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -35,13 +36,13 @@ jobs:
           registry-url: "https://registry.npmjs.org"
 
       - name: Install Dependencies
-        run: pnpm i --frozen-lockfile --ignore-scripts
+        run: bun install --frozen-lockfile --ignore-scripts
 
       - name: Build
-        run: pnpm run build
+        run: bun run build
 
       - name: Run Tests
-        run: pnpm run test
+        run: bun run test
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
@@ -61,9 +62,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: pnpm/action-setup@v2
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          version: latest
+          bun-version: ${{ env.BUN_VERSION }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -79,16 +81,23 @@ jobs:
 
       - name: Publish to NPM
         run: |
-          if git log -1 --pretty=%B | grep "^[0-9]\+\.[0-9]\+\.[0-9]\+$"; then
-            pnpm publish --access public --no-git-checks
-          elif git log -1 --pretty=%B | grep "^[0-9]\+\.[0-9]\+\.[0-9]\+"; then
-            pnpm publish --tag next --access public --no-git-checks
+          npm config set provenance true
+          COMMIT_MSG=$(git log -1 --pretty=%s | tr -d '\r\n')
+          VERSION=$(echo "$COMMIT_MSG" | grep -oE "^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.]+)?")
+
+          if [ -n "$VERSION" ]; then
+            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+            if echo "$VERSION" | grep -qE "^[0-9]+\.[0-9]+\.[0-9]+$"; then
+              npm publish --access public
+            else
+              npm publish --tag next --access public
+            fi
           else
             echo "Not a release, skipping publish"
           fi
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
   release:
     name: Release
     runs-on: ubuntu-latest
