@@ -22,4 +22,5 @@ build.rs
 Cargo.toml
 .vscode
 pnpm-lock.yaml
+bun.lock
 tsup.config.ts
