@@ -21,6 +21,7 @@ export class ItemsDat {
     "itemRenderer",
     "info",
     "hitSoundFX",
+    "unknownStrV27",
   ];
 
   public meta: ItemsDatMeta = {
@@ -187,6 +188,10 @@ export class ItemsDat {
         if (this.meta.version >= 26) {
           item.unknownByte2 = this.buffer.readU8();
         }
+
+        if (this.meta.version >= 27) {
+          item.unknownStrV27 = await this.buffer.readString();
+        }
       }
 
       this.meta.items.set(item.id, item);
@@ -318,6 +323,9 @@ export class ItemsDat {
         }
         if (this.meta.version! >= 26) {
           this.buffer.writeU8(item.unknownByte2!);
+        }
+        if (this.meta.version! >= 27) {
+          await this.writeString(item.unknownStrV27 || "", item.id!);
         }
       }
     }

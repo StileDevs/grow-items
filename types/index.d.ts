@@ -80,6 +80,7 @@ export interface ItemDefinition {
   hitSoundFX?: string;
   hitSoundFXHash?: number;
   unknownByte2?: number; // NOTE: not sure what this does
+  unknownStrV27?: string;
 }
 
 export interface ItemsDatMeta {
